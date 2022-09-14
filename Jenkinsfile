@@ -10,7 +10,7 @@ node {
     stage('Test'){
         withDockerContainer('qnib/pytest') {
             sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
-            junit 'test-reports/results.xml'
         }
+        junit 'test-reports/results.xml'
     }
 }
