@@ -10,8 +10,8 @@ node {
 
     docker.image('qnib/pytest').inside{
         stage('Test'){
-            sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
+            sh 'py.test --verbose --junit-xml report.xml sources/test_calc.py'
         }
-        step([$class: 'JUnitResultArchiver', checksName: '', testResults: '/test-reports/results.xml'])
+        step([$class: 'JUnitResultArchiver', checksName: '', testResults: 'report.xml'])
     }
 }
