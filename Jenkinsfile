@@ -11,7 +11,7 @@ node {
     stage('Test'){
         withDockerContainer('qnib/pytest') {
             sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
-            step([$class: 'JUnitResultArchiver', checksName: '', testResults: '/test-reports/results.xml'])
         }
+        step([$class: 'JUnitResultArchiver', checksName: '', testResults: '/test-reports/results.xml'])
     }
 }
