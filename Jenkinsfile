@@ -13,13 +13,12 @@ node {
             sh 'py.test --verbose --junit-xml report.xml sources/test_calc.py'
         }
         step([$class: 'JUnitResultArchiver', checksName: '', testResults: 'report.xml'])
-        input 'Lanjutkan ke tahap Deploy ?'
     }
 
     docker.image('cdrx/pyinstaller-linux:python2').inside{
         stage('Deploy'){
+            input 'Lanjutkan ke tahap Deploy ?'
             sh 'pyinstaller --onefile sources/add2vals.py'
-            sleep 60
         }
     }
 }
