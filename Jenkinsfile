@@ -1,6 +1,4 @@
 node {
-    
-    def workspace = pwd()
 
     checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: '/home/Downloads/simple-python-pyinstaller-app']]])
 
@@ -18,7 +16,7 @@ node {
         step([$class: 'JUnitResultArchiver', checksName: '', testResults: 'report.xml'])
     }
 
-    withEnv(['VOLUME=$workspace/sources:/src', 'IMAGE=cdrx/pyinstaller-linux:python2']) {
+    withEnv(['VOLUME=${env.WORKSPACE}/sources:/src', 'IMAGE=cdrx/pyinstaller-linux:python2']) {
         
         stage('Deploy'){
             
