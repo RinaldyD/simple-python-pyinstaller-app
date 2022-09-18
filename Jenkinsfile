@@ -18,7 +18,7 @@ node {
         step([$class: 'JUnitResultArchiver', checksName: '', testResults: 'report.xml'])
     }
 
-    withEnv(['VOLUME=/var/jenkins_home/workspace/submission-cicd-pipeline-aldydicoding/sources:/src', 'IMAGE=cdrx/pyinstaller-linux:python2']) {
+    withEnv(["VOLUME=$(pwd)/sources:/src", "IMAGE=cdrx/pyinstaller-linux:python2"]) {
         
         stage('Deploy'){
             
