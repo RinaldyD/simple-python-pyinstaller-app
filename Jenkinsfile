@@ -16,7 +16,7 @@ node {
         step([$class: 'JUnitResultArchiver', checksName: '', testResults: 'report.xml'])
     }
 
-    withEnv(['VOLUME=/var/jenkins_home/workspace/submission-cicd-pipeline-aldydicoding/sources:/src', 'IMAGE=cdrx/pyinstaller-linux:python2']) {
+    withEnv(['VOLUME=$pwd()/sources:/src', 'IMAGE=cdrx/pyinstaller-linux:python2']) {
         
         stage('Deploy'){
             
@@ -25,7 +25,7 @@ node {
                 sh 'docker run --rm -v $VOLUME $IMAGE \'pyinstaller -F add2vals.py\''
             }
 
-            archiveArtifacts artifacts: '$env.BUILD_ID/sources/dist/add2vals', followSymlinks: false
+            archiveArtifacts artifacts: '$BUILD_ID/sources/dist/add2vals', followSymlinks: false
             sh 'docker run --rm -v $VOLUME $IMAGE \'rm -rf build dist\''
         }
     }
