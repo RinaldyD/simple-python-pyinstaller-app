@@ -1,5 +1,8 @@
 node {
 
+    def workspace = WORKSPACE
+    workspace = env.WORKSPACE
+
     checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: '/home/Downloads/simple-python-pyinstaller-app']]])
 
     docker.image('python:2-alpine').inside{
@@ -16,7 +19,7 @@ node {
         step([$class: 'JUnitResultArchiver', checksName: '', testResults: 'report.xml'])
     }
 
-    withEnv(['VOLUME=${env.WORKSPACE}/sources:/src', 'IMAGE=cdrx/pyinstaller-linux:python2']) {
+    withEnv(['VOLUME=${workspace}/sources:/src', 'IMAGE=cdrx/pyinstaller-linux:python2']) {
         
         stage('Deploy'){
             
