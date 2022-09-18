@@ -18,7 +18,7 @@ node {
         step([$class: 'JUnitResultArchiver', checksName: '', testResults: 'report.xml'])
     }
 
-    withEnv(['VOLUME="${workspace}"/sources:/src', 'IMAGE=cdrx/pyinstaller-linux:python2']) {
+    withEnv(['VOLUME=$workspace/sources:/src', 'IMAGE=cdrx/pyinstaller-linux:python2']) {
         
         stage('Deploy'){
             
