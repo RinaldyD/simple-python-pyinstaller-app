@@ -1,5 +1,7 @@
 node {
     
+    def drct = pwd()
+
     checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: '/home/Downloads/simple-python-pyinstaller-app']]])
 
     docker.image('python:2-alpine').inside{
@@ -16,7 +18,7 @@ node {
         step([$class: 'JUnitResultArchiver', checksName: '', testResults: 'report.xml'])
     }
 
-    withEnv(['VOLUME=/var/jenkins_home/workspace/submission-cicd-pipeline-aldydicoding/25/sources:/src', 'IMAGE=cdrx/pyinstaller-linux:python2']) {
+    withEnv(['VOLUME=$drct/sources:/src', 'IMAGE=cdrx/pyinstaller-linux:python2']) {
         
         stage('Deploy'){
             
