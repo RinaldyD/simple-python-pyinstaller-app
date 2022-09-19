@@ -21,9 +21,9 @@ node {
         
         stage('Deploy'){
             
-            dir('env.BUILD_ID}') {
+            dir('env.BUILD_NUMBER}') {
                 unstash 'compiled-results'
-                sh "docker run --rm -v ${pwd()}/sources:/src $IMAGE \'pyinstaller -F add2vals.py\'"
+                sh "docker run --rm -v $VOLUME $IMAGE \'pyinstaller -F add2vals.py\'"
                 
             }
             archiveArtifacts artifacts: "$env.BUILD_ID/sources/dist/add2vals", followSymlinks: false
