@@ -21,9 +21,9 @@ node {
         
         stage('Deploy'){
             
-            dir("$env.BUILD_ID"){
+            dir("$BUILD_ID"){
             unstash 'compiled-results'
-            sh "docker run --rm -v /var/jenkins_home/workspace/submission-cicd-pipeline-aldydicoding/$env.BUILD_ID/sources:/src $IMAGE \'pyinstaller -F add2vals.py\'"
+            sh "docker run --rm -v $VOLUME $IMAGE \'pyinstaller -F add2vals.py\'"
             }
 
             archiveArtifacts artifacts: "$env.BUILD_ID/sources/dist/add2vals", followSymlinks: false
