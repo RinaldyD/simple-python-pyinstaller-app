@@ -20,10 +20,12 @@ node {
     withEnv(["VOLUME=${pwd()}/sources:/src", "IMAGE=cdrx/pyinstaller-linux:python2"]) {
         
         stage('Deploy'){
-        
-            unstash 'compiled-results'
-            sh "docker run --rm -v ${pwd()}/$env.BUILD_ID/sources:/src $IMAGE \'pyinstaller -F add2vals.py\'"
             
+            dir("$env.BUILD_ID"){
+            unstash 'compiled-results'
+            sh "docker run --rm -v /var/jenkins_home/workspace/submission-cicd-pipeline-aldydicoding/$env.BUILD_ID/sources:/src $IMAGE \'pyinstaller -F add2vals.py\'"
+            }
+
             archiveArtifacts artifacts: "$env.BUILD_ID/sources/dist/add2vals", followSymlinks: false
             sh "docker run --rm -v $VOLUME $IMAGE \'rm -rf build dist\'"
         }
