@@ -17,13 +17,13 @@ node {
         step([$class: 'JUnitResultArchiver', checksName: '', testResults: 'report.xml'])
     }
 
-    withEnv(["VOLUME=${pwd()}/sources:/src", "IMAGE=cdrx/pyinstaller-linux:python2"]) {
+    withEnv(["VOLUME=${pwd()}/sources:/src", "IMAGE=cdrx/pyinstaller-linux:python2", "SOURCE=/sources:/src"]) {
         
         stage('Deploy'){
             
             dir("$env.BUILD_ID"){
             unstash 'compiled-results'
-            sh "docker run --rm -v $VOLUME $IMAGE \'pyinstaller -F add2vals.py\'"
+            sh "docker run --rm -v ${pwd()}$env.BUILD_ID$SOURCE $IMAGE \'pyinstaller -F add2vals.py\'"
             }
 
             archiveArtifacts artifacts: "$env.BUILD_ID/sources/dist/add2vals", followSymlinks: false
