@@ -1,7 +1,7 @@
 node {
     def workspc = pwd()
 
-    checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: '/home/Downloads/simple-python-pyinstaller-app']]])
+    checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: '/home/simple-python-pyinstaller-app']]])
 
     docker.image('python:2-alpine').inside{
         stage('Build'){
