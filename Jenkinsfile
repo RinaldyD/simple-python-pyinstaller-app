@@ -15,6 +15,10 @@ node {
             sh 'py.test --verbose --junit-xml report.xml sources/test_calc.py'
         }
         step([$class: 'JUnitResultArchiver', checksName: '', testResults: 'report.xml'])
+
+    }
+
+    stage('Manual Approval'){
         input 'Lanjutkan ke tahap Deploy?'
     }
 
